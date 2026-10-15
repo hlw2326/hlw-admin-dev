@@ -23,7 +23,7 @@ return [
     'callable' => null,
     // 服务进程参数配置
     'worker' => [
-        'name' => 'ThinkAdmin',
+        'name' => 'HlwAdmin',
         'count' => 4,
     ],
     // 监控文件变更重载，仅 Debug 模式有效

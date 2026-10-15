@@ -1,6 +1,6 @@
-# ThinkAdminDeveloper for HlwAdmin
+# HlwAdminDeveloper for HlwAdmin
 
-**ThinkAdminDeveloper** 是 **HlwAdmin** 插件与组件的聚合开发仓库，用于集中维护、测试和自动分发各独立 Composer 包。
+**HlwAdminDeveloper** 是 **HlwAdmin** 插件与组件的聚合开发仓库，用于集中维护、测试和自动分发各独立 Composer 包。
 该仓库包含 ThinkLibrary 核心库、后台与静态资源等开源插件，以及扩展业务插件。各插件会按 `plugin/` 目录拆分到独立仓库发布。
 
 ## 关于项目
@@ -14,7 +14,7 @@
 ### 核心组件与插件体系
 
 **基础与开源组件**
-- **ThinkLibrary**: ThinkAdmin 核心库，提供控制器、模型、服务、队列、存储、配置、HTTP、JWT、数据处理等通用能力。
+- **ThinkLibrary**: HlwAdmin 核心库，提供控制器、模型、服务、队列、存储、配置、HTTP、JWT、数据处理等通用能力。
 - **ThinkPlugsAdmin**: 后台基础管理模块，包含系统配置、任务、日志、字典、文件、菜单、权限和后台用户管理。
 - **ThinkPlugsStatic**: 静态资源与初始化文件插件，提供后台前端资源、入口脚本和基础配置模板。
 - **ThinkPlugsWechat**: 微信基础管理模块，覆盖公众号配置、粉丝、素材、菜单、关键词回复、关注回复、微信支付与退款。
@@ -37,13 +37,13 @@
 - **事件驱动**: 支付、订单、返佣、任务等业务通过事件监听解耦。
 - **多授权模型**: MIT、Apache-2.0、VIP 会员授权和 FEE 收费授权并存，具体以各插件声明为准。
 
-我们持续推出新模块和辅助功能，期待后续更新！使用 **ThinkAdmin** 需要具备一定开发技能，包括 ThinkPHP、jQuery、LayUI 和 RequireJs。后台 UI 基于最新 LayUI 前端框架，支持插件加载和管理。
+我们持续推出新模块和辅助功能，期待后续更新！使用 **HlwAdmin** 需要具备一定开发技能，包括 ThinkPHP、jQuery、LayUI 和 RequireJs。后台 UI 基于最新 LayUI 前端框架，支持插件加载和管理。
 
 请勿修改 app/admin 目录，以确保未来功能和安全更新通过 Composer 管理。ThinkLibrary 作为核心组件，封装了常用操作，兼容原有 ThinkPHP 生态，降低编码复杂性。
 
 开发者可灵活集成 WechatDeveloper 组件，支持微信公众号、小程序及支付接口，并集成二维码生成工具。系统提供多种存储选项，包括本地、自建 Alist 及主流云服务，支持 CDN 加速，确保高效传输。
 
-内置的异步任务处理机制可并行处理多个任务，响应延时低于 0.5 秒，确保在 Windows 和 Linux 平台上的兼容性。遇到问题请随时联系我们的支持团队。感谢您选择 ThinkAdmin，我们将持续改进框架功能，更好服务开发者社区。
+内置的异步任务处理机制可并行处理多个任务，响应延时低于 0.5 秒，确保在 Windows 和 Linux 平台上的兼容性。遇到问题请随时联系我们的支持团队。感谢您选择 HlwAdmin，我们将持续改进框架功能，更好服务开发者社区。
 
 ### 安装系统
 

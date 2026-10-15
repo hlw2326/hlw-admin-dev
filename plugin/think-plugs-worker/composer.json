@@ -11,10 +11,10 @@
     }
   ],
   "require": {
-    "php": ">7.1",
+    "php": "^8.2",
     "workerman/workerman": "^5.0|^4.1",
-    "hlw2326/think-install": "^1.0|@dev",
-    "hlw2326/think-library": "^6.1|@dev"
+    "hlw2326/think-install": "*",
+    "hlw2326/think-library": "*"
   },
   "autoload": {
     "psr-4": {

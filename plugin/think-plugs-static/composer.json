@@ -10,8 +10,8 @@
     }
   ],
   "require": {
-    "php": ">=7.1",
-    "hlw2326/think-install": "dev-main"
+    "php": "^8.2",
+    "hlw2326/think-install": "*"
   },
   "extra": {
     "plugin": {

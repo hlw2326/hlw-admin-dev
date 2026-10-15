@@ -1,0 +1,92 @@
+{
+    "type": "project",
+    "name": "hlw2326/thinkadmin",
+    "license": "MIT",
+    "homepage": "https://thinkadmin.top",
+    "description": "HlwAdmin plugin aggregation and distribution project",
+    "keywords": [
+        "ThinkAdmin",
+        "ThinkLibrary",
+        "WeChatDeveloper"
+    ],
+    "authors": [
+        {
+            "name": "hlw2326",
+            "email": "1608626143@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "app\\index\\": "app/index/"
+        }
+    },
+    "require": {
+        "php": ">7.1",
+        "ext-gd": "*",
+        "ext-json": "*",
+        "ext-openssl": "*",
+        "hlw2326/think-library-site": "*",
+        "hlw2326/think-plugs-admin": "*",
+        "hlw2326/think-plugs-center": "*",
+        "hlw2326/think-plugs-worker": "*",
+        "zoujingli/wechat-developer": "*",
+        "zoujingli/weopen-developer": "*"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "hlw2326/think-plugs-helper": "*"
+    },
+    "scripts": {
+        "sync": [
+            "php-cs-fixer fix"
+        ],
+        "rewrite-model": [
+            "@php think xadmin:helper:model --reset",
+            "php-cs-fixer fix"
+        ],
+        "test": [
+            "php -m"
+        ]
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "plugin/think-install"
+        },
+        {
+            "type": "path",
+            "url": "plugin/think-plugs-helper"
+        },
+        {
+            "type": "path",
+            "url": "plugin/think-plugs-worker"
+        },
+        {
+            "type": "path",
+            "url": "plugin/think-plugs-admin"
+        },
+        {
+            "type": "path",
+            "url": "plugin/think-plugs-center"
+        },
+        {
+            "type": "path",
+            "url": "plugin/think-plugs-static"
+        },
+        {
+            "type": "path",
+            "url": "plugin/think-library"
+        },
+        {
+            "type": "path",
+            "url": "plugin/think-library-site"
+        }
+    ],
+    "minimum-stability": "dev",
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "hlw2326/think-install": true
+        }
+    }
+}

@@ -1,0 +1,58 @@
+<form action="{:sysuri()}" method="post" data-auto="true" class="layui-form layui-card">
+    <div class="layui-card-body padding-left-40">
+
+        <input type="hidden" name="ai[type]" value="ernie">
+
+        <div class="color-text layui-code text-center layui-bg-gray" style="border-left-width:1px;margin:0 0 15px 0">
+            <p class="margin-bottom-5 font-w7">使用 <a target="_blank" href="https://console.bce.baidu.com/qianfan/">百度智能云千帆 / 文心一言</a></p>
+            <p>百度自主研发的产业级知识增强大语言模型，深度契合国内政企业务合规要求</p>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">
+                <b class="color-green">API Key</b><br><span class="nowrap color-desc">Ernie Key</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="ai[ernie_key]" value="{:sysconf('ai.ernie_key')}" required vali-name="API Key" placeholder="bce-v3/ALTAK-xxxxxxxxxxxxxxxxxxxx/xxxxxxxx" class="layui-input">
+                <p class="help-block">在 [ 百度智能云千帆大模型平台 > API Key ] 中创建或配置 Token</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">
+                <b class="color-green">默认模型</b><br><span class="nowrap color-desc">Model</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="ai[ernie_model]" value="{:sysconf('ai.ernie_model')?:'ernie-4.0-turbo-8k'}" required vali-name="默认模型" placeholder="ernie-4.0-turbo-8k" class="layui-input">
+                <p class="help-block">推荐：<code>ernie-4.0-turbo-8k</code>（旗舰高性价比）、<code>ernie-speed-128k</code>（免费轻量长文本）</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <b class="color-green">接口地址</b><br><span class="nowrap color-desc">Endpoint</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="ai[ernie_endpoint]" value="{:sysconf('ai.ernie_endpoint')}" placeholder="默认：https://qianfan.baidubce.com/v2/chat/completions" class="layui-input">
+                <p class="help-block">千帆 v2 OpenAI 规范兼容接口，留空时使用官方默认兼容端点</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <b class="color-green">采样温度</b><br><span class="nowrap color-desc">Temperature</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="ai[temperature]" value="{:sysconf('ai.temperature')?:'0.7'}" placeholder="0.0 ~ 2.0" class="layui-input">
+                <p class="help-block">值越大回答越具创意，建议 0.5 ~ 1.0 之间</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        <button class="layui-btn" type="submit">保存配置</button>
+        <button class="layui-btn layui-btn-danger" type="button" data-confirm="确定要取消修改吗？" data-close>取消修改</button>
+    </div>
+</form>

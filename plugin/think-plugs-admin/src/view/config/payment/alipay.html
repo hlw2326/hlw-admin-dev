@@ -1,0 +1,79 @@
+<form action="{:sysuri()}" method="post" data-auto="true" class="layui-form layui-card">
+    <div class="layui-card-body padding-left-40">
+
+        <input type="hidden" name="payment[type]" value="alipay">
+
+        <div class="color-text layui-code text-center layui-bg-gray" style="border-left-width:1px;margin:0 0 15px 0">
+            <p class="margin-bottom-5 font-w7">使用 <a target="_blank" href="https://open.alipay.com/">支付宝开放平台</a></p>
+            <p>基于支付宝 OpenAPI 标准接口，全面支持电脑网站支付、手机网站支付、App 支付及当面付扫码</p>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">
+                <b class="color-green">应用 AppID</b><br><span class="nowrap color-desc">AppID</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="payment[alipay_appid]" value="{:sysconf('payment.alipay_appid')}" required vali-name="应用 AppID" placeholder="如：2021000000000000" class="layui-input">
+                <p class="help-block">支付宝开放平台创建的自研应用 AppID</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">
+                <b class="color-green">应用私钥</b><br><span class="nowrap color-desc">Private Key</span>
+            </label>
+            <div class="layui-input-block">
+                <textarea name="payment[alipay_private_key]" required vali-name="应用私钥" placeholder="-----BEGIN RSA PRIVATE KEY----- ... -----END RSA PRIVATE KEY-----" class="layui-textarea" style="height:100px;">{:sysconf('payment.alipay_private_key')}</textarea>
+                <p class="help-block">使用支付宝开发助手生成的 PKCS8 或 PKCS1 格式商户私钥内容</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <b class="color-green">支付宝公钥</b><br><span class="nowrap color-desc">Public Key</span>
+            </label>
+            <div class="layui-input-block">
+                <textarea name="payment[alipay_public_key]" placeholder="-----BEGIN PUBLIC KEY----- ... -----END PUBLIC KEY-----" class="layui-textarea" style="height:90px;">{:sysconf('payment.alipay_public_key')}</textarea>
+                <p class="help-block">在开放平台应用开发设置中获取的“支付宝公钥”（用于异步通知验签）</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <b class="color-green">沙箱环境</b><br><span class="nowrap color-desc">Sandbox</span>
+            </label>
+            <div class="layui-input-block">
+                {if !sysconf('payment.alipay_sandbox')}{php}sysconf('payment.alipay_sandbox','0');{/php}{/if}
+                <div class="layui-input help-checks">
+                    {foreach ['0'=>'生产正式环境','1'=>'沙箱联调环境'] as $mode=>$remark}
+                    <label class="think-radio">
+                        {if sysconf('payment.alipay_sandbox') eq $mode}
+                        <input checked type="radio" name="payment[alipay_sandbox]" value="{$mode}" lay-ignore> {$remark}
+                        {else}
+                        <input type="radio" name="payment[alipay_sandbox]" value="{$mode}" lay-ignore> {$remark}
+                        {/if}
+                    </label>
+                    {/foreach}
+                </div>
+                <p class="help-block">开启沙箱环境后所有交易请求将走支付宝沙箱网关</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <b class="color-green">回调地址</b><br><span class="nowrap color-desc">Notify URL</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="payment[alipay_notify_url]" value="{:sysconf('payment.alipay_notify_url')}" placeholder="如：https://yourdomain.com/admin/payment/notify" class="layui-input">
+                <p class="help-block">全局默认异步通知回调地址，订单未指定时将使用此地址</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        <button class="layui-btn" type="submit">保存配置</button>
+        <button class="layui-btn layui-btn-danger" type="button" data-confirm="确定要取消修改吗？" data-close>取消修改</button>
+    </div>
+</form>

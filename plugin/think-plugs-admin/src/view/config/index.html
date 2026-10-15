@@ -1,0 +1,448 @@
+{extend name="main"}
+
+{block name="button"}
+<!--{if isset($issuper) and $issuper}-->
+<a class="layui-btn layui-btn-sm layui-btn-primary" data-load="{:url('admin/api.system/config')}">{:lang('清理无效配置')}</a>
+<!--{/if}-->
+
+<!--{if auth('system')}-->
+<a class="layui-btn layui-btn-sm layui-btn-primary" data-modal="{:url('system')}">{:lang('修改系统参数')}</a>
+<!--{/if}-->
+{/block}
+
+{block name="content"}
+<!--{notempty name='issuper'}-->
+<div class="layui-card padding-20 shadow">
+    <div class="layui-card-header notselect">
+        <span class="help-label">
+            <b style="color:#333!important;">{:lang('运行模式')}</b>( {:lang('仅超级管理员可配置')} )
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-btn-group shadow-mini nowrap">
+            <!--{if $app->isDebug()}-->
+            <a class="layui-btn layui-btn-sm layui-btn-active">{:lang('以开发模式运行')}</a>
+            <a class="layui-btn layui-btn-sm layui-btn-primary" data-confirm="{:lang('确定要切换到生产模式运行吗？')}" data-load="{:url('admin/api.system/debug')}?state=1">{:lang('以生产模式运行')}</a>
+            <!--{else}-->
+            <a class="layui-btn layui-btn-sm layui-btn-primary" data-confirm="{:lang('确定要切换到开发模式运行吗？')}" data-load="{:url('admin/api.system/debug')}?state=0">{:lang('以开发模式运行')}</a>
+            <a class="layui-btn layui-btn-sm layui-btn-active">{:lang('以生产模式运行')}</a>
+            <!--{/if}-->
+        </div>
+        <div class="margin-top-20">
+            <p><b>{:lang('开发模式')}</b>：{:lang('开发人员或在功能调试时使用，系统异常时会显示详细的错误信息，同时还会记录操作日志及数据库 SQL 语句信息。')}</p>
+            <p><b>{:lang('生产模式')}</b>：{:lang('项目正式部署上线后使用，系统异常时统一显示 “%s”，只记录重要的异常日志信息，强烈推荐上线后使用此模式。',[config('app.error_message')])}</p>
+        </div>
+    </div>
+</div>
+
+<div class="layui-card padding-20 shadow">
+    <div class="layui-card-header notselect">
+        <span class="help-label">
+            <b style="color:#333!important;">{:lang('富编辑器')}</b>( {:lang('仅超级管理员可配置')} )
+        </span>
+    </div>
+    <div class="layui-card-body layui-clear">
+        <div class="layui-btn-group shadow-mini">
+            {if !in_array(sysconf('base.editor'),['ckeditor4','ckeditor5','wangEditor','auto'])}{php}sysconf('base.editor','ckeditor4');{/php}{/if}
+            {foreach ['ckeditor4'=>'CKEditor4','ckeditor5'=>'CKEditor5','wangEditor'=>'wangEditor','auto'=>lang('自适应模式')] as $k => $v}{if sysconf('base.editor') eq $k}
+            {if auth('storage')}<a data-title="配置{$v}" class="layui-btn layui-btn-sm layui-btn-active">{$v}</a>{else}<a class="layui-btn layui-btn-sm layui-btn-active">{$v}</a>{/if}
+            {else}
+            {if auth('storage')}<a data-title="配置{$v}" data-action="{:url('admin/api.system/editor')}" data-value="editor#{$k}" class="layui-btn layui-btn-sm layui-btn-primary">{$v}</a>{else}<a class="layui-btn layui-btn-sm layui-btn-primary">{$v}</a>{/if}
+            {/if}{/foreach}
+        </div>
+        <div class="margin-top-20 full-width pull-left">
+            <p><b>CKEditor4</b>：{:lang('旧版本编辑器，对浏览器兼容较好，但内容编辑体验稍有不足。')}</p>
+            <p><b>CKEditor5</b>：{:lang('新版本编辑器，只支持新特性浏览器，对内容编辑体验较好，推荐使用。')}</p>
+            <p><b>wangEditor</b>：{:lang('国产优质富文本编辑器，对于小程序及App内容支持会更友好，推荐使用。')}</p>
+            <p><b>{:lang('自适应模式')}</b>：{:lang('优先使用新版本编辑器，若浏览器不支持新版本时自动降级为旧版本编辑器。')}</p>
+        </div>
+    </div>
+</div>
+<!--{/notempty}-->
+
+<div class="layui-card padding-20 shadow">
+    <div class="layui-card-header notselect">
+        <span class="help-label">
+            <b style="color:#333!important;">{:lang('存储引擎')}</b>( {:lang('文件默认存储方式')} )
+        </span>
+    </div>
+    <!-- 初始化存储配置 -->
+    {if !sysconf('storage.type')}{php}sysconf('storage.type','local');{/php}{/if}
+    {if !sysconf('storage.link_type')}{php}sysconf('storage.link_type','none');{/php}{/if}
+    {if !sysconf('storage.name_type')}{php}sysconf('storage.name_type','xmd5');{/php}{/if}
+    {if !sysconf('storage.allow_exts')}{php}sysconf('storage.allow_exts','doc,gif,ico,jpg,mp3,mp4,p12,pem,png,rar,xls,xlsx');{/php}{/if}
+    {if !sysconf('storage.local_http_protocol')}{php}sysconf('storage.local_http_protocol','follow');{/php}{/if}
+    <div class="layui-card-body">
+        <div class="layui-btn-group shadow-mini nowrap">
+            {foreach $files as $k => $v}{if sysconf('storage.type') eq $k}
+            {if auth('storage')}<a data-title="配置{$v}" data-modal="{:url('storage')}?type={$k}" class="layui-btn layui-btn-sm layui-btn-active">{$v}</a>{else}<a class="layui-btn layui-btn-sm layui-btn-active">{$v}</a>{/if}
+            {else}
+            {if auth('storage')}<a data-title="配置{$v}" data-modal="{:url('storage')}?type={$k}" class="layui-btn layui-btn-sm layui-btn-primary">{$v}</a>{else}<a class="layui-btn layui-btn-sm layui-btn-primary">{$v}</a>{/if}
+            {/if}{/foreach}
+        </div>
+        <div class="margin-top-20 full-width">
+            <p><b>{:lang('本地服务器存储')}</b>：{:lang('文件上传到本地服务器的 `static/upload` 目录，不支持大文件上传，占用服务器磁盘空间，访问时消耗服务器带宽流量。')}</p>
+            <p><b>{:lang('自建Alist存储')}</b>：{:lang('文件上传到 Alist 存储的服务器或云存储空间，根据服务配置可支持大文件上传，不占用本身服务器空间及服务器带宽流量。')}</p>
+            <p><b>{:lang('七牛云对象存储')}</b>：{:lang('文件上传到七牛云存储空间，支持大文件上传，不占用服务器空间及服务器带宽流量，支持 CDN 加速访问，访问量大时推荐使用。')}</p>
+            <p><b>{:lang('又拍云USS存储')}</b>：{:lang('文件上传到又拍云 USS 存储空间，支持大文件上传，不占用服务器空间及服务器带宽流量，支持 CDN 加速访问，访问量大时推荐使用。')}</p>
+            <p><b>{:lang('阿里云OSS存储')}</b>：{:lang('文件上传到阿里云 OSS 存储空间，支持大文件上传，不占用服务器空间及服务器带宽流量，支持 CDN 加速访问，访问量大时推荐使用。')}</p>
+            <p><b>{:lang('腾讯云COS存储')}</b>：{:lang('文件上传到腾讯云 COS 存储空间，支持大文件上传，不占用服务器空间及服务器带宽流量，支持 CDN 加速访问，访问量大时推荐使用。')}</p>
+            <p><b>{:lang('MinIO 对象存储')}</b>：{:lang('基于自建 MinIO 高性能对象存储服务，100% 兼容 Amazon S3 协议，数据完全私有自主可控。')}</p>
+            <p><b>{:lang('AWS S3 对象存储')}</b>：{:lang('亚马逊云科技原生全球分布式对象存储服务，支持跨国海量存储、高持久度与 CloudFront CDN 加速。')}</p>
+        </div>
+    </div>
+</div>
+
+<div class="layui-card padding-20 shadow">
+    <div class="layui-card-header notselect">
+        <span class="help-label">
+            <b style="color:#333!important;">{:lang('AI 大模型引擎')}</b>( {:lang('通用人工智能对话与内容生成')} )
+        </span>
+    </div>
+    <!-- 初始化大模型配置 -->
+    {if !sysconf('ai.type')}{php}sysconf('ai.type','deepseek');{/php}{/if}
+    <div class="layui-card-body">
+        <div class="layui-btn-group shadow-mini nowrap">
+            {foreach $ais as $k => $v}{if sysconf('ai.type') eq $k}
+            {if auth('ai')}<a data-title="配置{$v}" data-modal="{:url('ai')}?type={$k}" class="layui-btn layui-btn-sm layui-btn-active">{$v}</a>{else}<a class="layui-btn layui-btn-sm layui-btn-active">{$v}</a>{/if}
+            {else}
+            {if auth('ai')}<a data-title="配置{$v}" data-modal="{:url('ai')}?type={$k}" class="layui-btn layui-btn-sm layui-btn-primary">{$v}</a>{else}<a class="layui-btn layui-btn-sm layui-btn-primary">{$v}</a>{/if}
+            {/if}{/foreach}
+        </div>
+        <div class="margin-top-20 full-width">
+            <p><b>{:lang('DeepSeek 深度求索')}</b>：{:lang('国产顶级高性价比开源通用大模型，支持 deepseek-chat 通用对话与 deepseek-reasoner 深度推理思考模型。')}</p>
+            <p><b>{:lang('OpenAI ChatGPT')}</b>：{:lang('国际领先的生成式人工智能，支持 gpt-4o、gpt-4o-mini 等大模型，支持自定义代理端点。')}</p>
+            <p><b>{:lang('Anthropic Claude')}</b>：{:lang('Anthropic 旗下顶尖大模型，具备业界卓越的代码生成、长文本理解与严密逻辑推理能力。')}</p>
+            <p><b>{:lang('Google Gemini')}</b>：{:lang('谷歌自研原生多模态大模型，拥有百万级超长上下文窗口，多模态与逻辑分析能力强劲。')}</p>
+            <p><b>{:lang('阿里通义千问')}</b>：{:lang('阿里云百炼 (DashScope) 兼容接口，支持 qwen-plus、qwen-turbo 与 qwen-max 全系列千问大模型。')}</p>
+            <p><b>{:lang('智谱清言 GLM')}</b>：{:lang('清华技术成果转化的全自研大模型，支持极速免费的 glm-4-flash 及企业级 glm-4 旗舰模型。')}</p>
+            <p><b>{:lang('月之暗面 Kimi')}</b>：{:lang('月之暗面 (Moonshot) 创新大模型，超长上下文无损文本处理，精准语义问答与文档阅读理解。')}</p>
+            <p><b>{:lang('百度文心一言')}</b>：{:lang('百度智能云千帆平台产业级知识增强大语言模型，全面满足国内政企高可靠合规需求。')}</p>
+            <p><b>{:lang('科大讯飞星火')}</b>：{:lang('科大讯飞自主研发认知大模型，在中文语义理解、交互问答、长篇写作与多领域知识分析表现出色。')}</p>
+            <p><b>{:lang('字节跳动豆包')}</b>：{:lang('字节跳动火山引擎 (火山方舟) 大模型，极高性价比与高并发吞吐，全面覆盖日常对话与企业业务。')}</p>
+            <p><b>{:lang('腾讯云混元')}</b>：{:lang('腾讯全链路自研大模型，深度融入腾讯云生态体系，支持文生文、逻辑推理及多轮智能交互。')}</p>
+            <p><b>{:lang('MiniMax 名之梦')}</b>：{:lang('名之梦通用人工智能科技模型，在复杂角色扮演、智能体互动与长上下文对话场景优势显著。')}</p>
+        </div>
+    </div>
+</div>
+
+<div class="layui-card padding-20 shadow">
+    <div class="layui-card-header notselect">
+        <span class="help-label">
+            <b style="color:#333!important;">{:lang('支付网关引擎')}</b>( {:lang('聚合在线收单与跨境支付')} )
+        </span>
+    </div>
+    <!-- 初始化支付配置 -->
+    {if !sysconf('payment.type')}{php}sysconf('payment.type','wechat');{/php}{/if}
+    <div class="layui-card-body">
+        <div class="layui-btn-group shadow-mini nowrap">
+            {foreach $payments as $k => $v}{if sysconf('payment.type') eq $k}
+            {if auth('payment')}<a data-title="配置{$v}" data-modal="{:url('payment')}?type={$k}" class="layui-btn layui-btn-sm layui-btn-active">{$v}</a>{else}<a class="layui-btn layui-btn-sm layui-btn-active">{$v}</a>{/if}
+            {else}
+            {if auth('payment')}<a data-title="配置{$v}" data-modal="{:url('payment')}?type={$k}" class="layui-btn layui-btn-sm layui-btn-primary">{$v}</a>{else}<a class="layui-btn layui-btn-sm layui-btn-primary">{$v}</a>{/if}
+            {/if}{/foreach}
+        </div>
+        <div class="margin-top-20 full-width">
+            <p><b>{:lang('微信支付')}</b>：{:lang('基于微信商户平台 V3 API 接口标准，支持 Native 扫码、JSAPI 公众号/小程序、H5 手机网页与 App 支付。')}</p>
+            <p><b>{:lang('支付宝支付')}</b>：{:lang('基于支付宝开放平台 OpenAPI 规范，支持电脑网站支付、手机网站支付、当面付扫码与 App 支付，支持沙箱联调。')}</p>
+            <p><b>{:lang('PayPal 国际支付')}</b>：{:lang('全球主流国际跨境收单通道（REST API v2），支持国际信用卡、借记卡及 PayPal 钱包结算。')}</p>
+            <p><b>{:lang('Stripe 聚合支付')}</b>：{:lang('先进的全球开发者聚合支付平台（Payment Intents API），支持全球主流银行卡、Apple Pay 与 Google Pay 极简调起。')}</p>
+        </div>
+    </div>
+</div>
+
+<div class="layui-card padding-20 shadow">
+    <div class="layui-card-header notselect">
+        <span class="help-label">
+            <b style="color:#333!important;">{:lang('通知渠道')}</b>( {:lang('系统事件推送通知')} )
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form margin-bottom-15">
+            <div class="help-label" style="margin-bottom:8px;"><b>{:lang('推送渠道')}</b>Enable</div>
+            {foreach $notices as $k => $v}
+            <input type="checkbox" name="notice_enable" value="{$k}" title="{$v}" lay-skin="primary" lay-filter="NoticeEnableToggle" {if in_array($k, $noticeEnabled)}checked{/if}>
+            {/foreach}
+            <div class="help-block sub-span-blue margin-top-5">{:lang('勾选的渠道在调用 Notice::push() 时将同时广播推送，点击下方按钮可单独配置各渠道参数及测试 ~')}</div>
+        </div>
+        <div class="layui-btn-group shadow-mini nowrap">
+            {foreach $notices as $k => $v}{if in_array($k, $noticeReady)}
+            {if auth('notice')}<a data-title="配置{$v}" data-modal="{:url('notice')}?type={$k}" class="layui-btn layui-btn-sm layui-btn-active">{$v}</a>{else}<a class="layui-btn layui-btn-sm layui-btn-active">{$v}</a>{/if}
+            {else}
+            {if auth('notice')}<a data-title="配置{$v}" data-modal="{:url('notice')}?type={$k}" class="layui-btn layui-btn-sm layui-btn-primary">{$v}</a>{else}<a class="layui-btn layui-btn-sm layui-btn-primary">{$v}</a>{/if}
+            {/if}{/foreach}
+        </div>
+        <div class="margin-top-20 full-width">
+            <p><b>{:lang('企业微信群机器人')}</b>：{:lang('通过企业微信自定义机器人 Webhook 推送 Markdown 消息，支持指定成员 @ 提醒。')}</p>
+            <p><b>{:lang('飞书机器人')}</b>：{:lang('通过飞书自定义机器人 Webhook 推送，支持可选密钥签名校验。')}</p>
+            <p><b>{:lang('钉钉机器人')}</b>：{:lang('通过钉钉自定义机器人 Webhook 推送，支持加签密钥及指定群成员 @ 提醒。')}</p>
+            <p><b>{:lang('公众号模板消息')}</b>：{:lang('通过微信公众号（服务号）模板消息接口推送，直达管理员微信。')}</p>
+            <p><b>{:lang('邮件通知')}</b>：{:lang('使用标准 SMTP 协议发送邮件通知，支持 SSL/TLS 安全加密连接。')}</p>
+            <p><b>{:lang('手机短信')}</b>：{:lang('通过短信服务商下发短信通知，具体服务商参数在下方短信引擎中设置。')}</p>
+        </div>
+        <div class="hr-line-dashed margin-top-20 margin-bottom-20"></div>
+        <div class="layui-collapse" lay-accordion>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title"><b>{:lang('内置消息模板与发送优先级')}</b> ( {:lang('支持 sendCard 交互卡片、sendImage 图片、sendFile 文件推送与优先级调度')} )</h2>
+                <div class="layui-colla-content layui-show">
+                    <table class="layui-table margin-0" lay-skin="line" lay-size="sm">
+                        <colgroup>
+                            <col width="150">
+                            <col width="150">
+                            <col width="100">
+                            <col>
+                            <col width="100">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>{:lang('模板标识')}</th>
+                                <th>{:lang('模板名称')}</th>
+                                <th>{:lang('默认优先级')}</th>
+                                <th>{:lang('模板标题与内容摘要')}</th>
+                                <th class="text-center">{:lang('操作')}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {foreach $noticeTemplates as $tk => $tv}
+                            <tr>
+                                <td><code>{$tk}</code></td>
+                                <td class="font-w7">{$tv.name}</td>
+                                <td>
+                                    {if $tv.priority eq 'urgent'}<span class="layui-badge layui-bg-red">{:lang('紧急')}</span>
+                                    {elseif $tv.priority eq 'high'}<span class="layui-badge layui-bg-orange">{:lang('重要')}</span>
+                                    {elseif $tv.priority eq 'low'}<span class="layui-badge layui-bg-gray">{:lang('低')}</span>
+                                    {else}<span class="layui-badge layui-bg-blue">{:lang('普通')}</span>{/if}
+                                </td>
+                                <td class="color-desc font-s12" title="{$tv.content}">{$tv.title} - {$tv.content}</td>
+                                <td class="text-center">
+                                    <a class="layui-btn layui-btn-xs layui-btn-normal" data-notice-tpl-test="{$tk}">{:lang('测试')}</a>
+                                </td>
+                            </tr>
+                            {/foreach}
+                        </tbody>
+                    </table>
+                    <div class="help-block margin-top-10">
+                        <b>{:lang('优先级调度说明')}</b>：
+                        <span class="layui-badge layui-bg-red">urgent 紧急</span> 飞书红色警报卡片、钉钉/企业微信群 @所有人、邮件最高优先级；
+                        <span class="layui-badge layui-bg-orange">high 重要</span> 橙色高亮卡片、@ 责任人；
+                        <span class="layui-badge layui-bg-blue">normal 普通</span> 默认常规推送；
+                        <span class="layui-badge layui-bg-gray">low 低</span> 免打扰静默推送。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="layui-card padding-20 shadow">
+    <div class="layui-card-header notselect">
+        <span class="help-label">
+            <b style="color:#333!important;">{:lang('短信引擎')}</b>( {:lang('短信服务商配置')} )
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-btn-group shadow-mini nowrap">
+            {foreach $smss as $k => $v}{if sysconf('sms.type') eq $k}
+            {if auth('sms')}<a data-title="配置{$v}" data-modal="{:url('sms')}?type={$k}" class="layui-btn layui-btn-sm layui-btn-active">{$v}</a>{else}<a class="layui-btn layui-btn-sm layui-btn-active">{$v}</a>{/if}
+            {else}
+            {if auth('sms')}<a data-title="配置{$v}" data-modal="{:url('sms')}?type={$k}" class="layui-btn layui-btn-sm layui-btn-primary">{$v}</a>{else}<a class="layui-btn layui-btn-sm layui-btn-primary">{$v}</a>{/if}
+            {/if}{/foreach}
+        </div>
+        <div class="margin-top-20 full-width">
+            <p><b>{:lang('阿里云短信')}</b>：{:lang('使用阿里云短信服务（Dysmsapi），支持海量并发验证码与通知短信下发，国内主流短信通道稳定可靠。')}</p>
+            <p><b>{:lang('腾讯云短信')}</b>：{:lang('使用腾讯云短信服务（SMS 3.0），覆盖全国多网及国际短信，支持自定义短信签名与丰富模板变量。')}</p>
+            <p><b>{:lang('华为云短信')}</b>：{:lang('使用华为云消息&短信服务（MSGSMS），企业级安全可信，具备高可用通道与 WSSE 安全鉴权。')}</p>
+            <p><b>{:lang('百度云短信')}</b>：{:lang('使用百度智能云短信服务，基于 BCE API v3 标准签名协议，快速触达全国移动联通电信用户。')}</p>
+            <p><b>{:lang('七牛云短信')}</b>：{:lang('使用七牛云短信平台，极简开发者 RESTful API 与 Token 签名鉴权，计费灵活透明。')}</p>
+            <p><b>{:lang('创蓝253短信')}</b>：{:lang('国内老牌云通讯平台，高速三网直连验证码通道，5秒极速触达，高到达率。')}</p>
+            <p><b>{:lang('助通短信')}</b>：{:lang('新助通科技企业短信通道，支持自定义模板与变量替换，性价比高且对接敏捷。')}</p>
+            <p><b>{:lang('容联云通讯')}</b>：{:lang('经典容联云通讯电信级短信平台，支持标准模板短信下发与状态回调。')}</p>
+            <p><b>{:lang('网易云信短信')}</b>：{:lang('网易高可靠云信通信通道，支持自定义验证码/通知模板与 CheckSum 安全校验，广泛应用于游戏、社交与高可用业务。')}</p>
+            <p><b>{:lang('云片网络短信')}</b>：{:lang('老牌智能云通讯平台，单条/批量下发，支持验证码与营销通知，具备账户余额与额度查询接口。')}</p>
+            <p><b>{:lang('赛邮SubMail短信')}</b>：{:lang('SubMail 云通讯平台，完美支持国内短信与全球国际短信通道快速切换，支持账户余量实时查询。')}</p>
+            <p><b>{:lang('极光短信推送')}</b>：{:lang('极光 JPush 统一开发者生态短信服务，支持签名、模板及发送状态/回执查询（Receipt）。')}</p>
+            <p><b>{:lang('Twilio国际短信')}</b>：{:lang('全球领先的云通讯服务商，全格式 E.164 国际号码直发，支持实时余额与投递状态回执查询。')}</p>
+            <p><b>{:lang('梦网科技短信')}</b>：{:lang('中国知名移动信息服务商，三网合一高并发通道，支持 MD5 动态签名防重放与余额查询。')}</p>
+        </div>
+    </div>
+</div>
+
+<div class="layui-card padding-20 shadow">
+    <div class="layui-card-header notselect">
+        <span class="help-label">
+            <b style="color:#333!important;">{:lang('小程序码引擎')}</b>( {:lang('微信与各平台小程序码服务端生成')} )
+        </span>
+    </div>
+    <!-- 初始化小程序码配置 -->
+    {if !sysconf('qrcode.type')}{php}sysconf('qrcode.type','wechat');{/php}{/if}
+    <div class="layui-card-body">
+        <div class="layui-btn-group shadow-mini nowrap">
+            {foreach $qrcodes as $k => $v}{if sysconf('qrcode.type') eq $k}
+            {if auth('qrcode')}<a data-title="配置{$v}" data-modal="{:url('qrcode')}?type={$k}" class="layui-btn layui-btn-sm layui-btn-active">{$v}</a>{else}<a class="layui-btn layui-btn-sm layui-btn-active">{$v}</a>{/if}
+            {else}
+            {if auth('qrcode')}<a data-title="配置{$v}" data-modal="{:url('qrcode')}?type={$k}" class="layui-btn layui-btn-sm layui-btn-primary">{$v}</a>{else}<a class="layui-btn layui-btn-sm layui-btn-primary">{$v}</a>{/if}
+            {/if}{/foreach}
+        </div>
+        <div class="margin-top-20 full-width">
+            <p><b>{:lang('微信小程序码')}</b>：{:lang('基于官方 API 接口，支持无数量限制的小程序码（Scene 模式）、普通小程序码（Path 模式，支持 10 万个）以及通用小程序二维码。')}</p>
+            <p><b>{:lang('QQ 小程序码')}</b>：{:lang('基于腾讯官方 QQ 小程序开放平台 CreateMiniCode 接口，生成指定页面的小程序码。')}</p>
+        </div>
+    </div>
+</div>
+
+<div class="layui-card padding-20 shadow">
+    <div class="layui-card-header notselect">
+        <span class="help-label">
+            <b style="color:#333!important;">{:lang('系统参数')}</b>( {:lang('当前系统配置参数')} )
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form-item">
+            <div class="help-label"><b>{:lang('网站名称')}</b>Website</div>
+            <label class="relative block">
+                <input readonly value="{:sysconf('site_name')}" class="layui-input layui-bg-gray">
+                <a data-copy="{:sysconf('site_name')}" class="layui-icon layui-icon-release input-right-icon"></a>
+            </label>
+            <div class="help-block">{:lang('网站名称及网站图标，将显示在浏览器的标签上。')}</div>
+        </div>
+        <div class="layui-form-item">
+            <div class="help-label"><b>{:lang('管理程序名称')}</b>Name</div>
+            <label class="relative block">
+                <input readonly value="{:sysconf('app_name')}" class="layui-input layui-bg-gray">
+                <a data-copy="{:sysconf('app_name')}" class="layui-icon layui-icon-release input-right-icon"></a>
+            </label>
+            <div class="help-block">{:lang('管理程序名称，将显示在后台左上角标题。')}</div>
+        </div>
+        <div class="layui-form-item">
+            <div class="help-label"><b>{:lang('管理程序版本')}</b>Version</div>
+            <label class="relative block">
+                <input readonly value="{:sysconf('app_version')}" class="layui-input layui-bg-gray">
+                <a data-copy="{:sysconf('app_version')}" class="layui-icon layui-icon-release input-right-icon"></a>
+            </label>
+            <div class="help-block">{:lang('管理程序版本，将显示在后台左上角标题。')}</div>
+        </div>
+        <div class="layui-form-item">
+            <div class="help-label"><b>{:lang('公安备案号')}</b>Beian</div>
+            <label class="relative block">
+                <input readonly value="{:sysconf('beian')?:'-'}" class="layui-input layui-bg-gray">
+                <a data-copy="{:sysconf('beian')}" class="layui-icon layui-icon-release input-right-icon"></a>
+            </label>
+            <p class="help-block">
+                {:lang('公安备案号，可以在 %s 查询获取，将在登录页面下面显示。',['<a target="_blank" href="https://www.beian.gov.cn/portal/registerSystemInfo">www.beian.gov.cn</a>'])}
+            </p>
+        </div>
+        <div class="layui-form-item">
+            <div class="help-label"><b>{:lang('网站备案号')}</b>Miitbeian</div>
+            <label class="relative block">
+                <input readonly value="{:sysconf('miitbeian')?:'-'}" class="layui-input layui-bg-gray">
+                <a data-copy="{:sysconf('miitbeian')}" class="layui-icon layui-icon-release input-right-icon"></a>
+            </label>
+            <div class="help-block">
+                {:lang('网站备案号，可以在 %s 查询获取，将显示在登录页面下面。',['<a target="_blank" href="https://beian.miit.gov.cn">beian.miit.gov.cn</a>'])}
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="help-label"><b>{:lang('网站版权信息')}</b>Copyright</div>
+            <label class="relative block">
+                <input readonly value="{:sysconf('site_copy')}" class="layui-input layui-bg-gray">
+                <a data-copy="{:sysconf('site_copy')}" class="layui-icon layui-icon-release input-right-icon"></a>
+            </label>
+            <div class="help-block">{:lang('网站版权信息，在后台登录页面显示版本信息并链接到备案到信息备案管理系统。')}</div>
+        </div>
+    </div>
+</div>
+
+<!--{if $app->isDebug()}-->
+<div class="layui-card padding-20 shadow">
+    <div class="layui-card-header notselect">
+        <span class="help-label">
+            <b style="color:#333!important;">{:lang('系统信息')}</b>( {:lang('仅开发模式可见')} )
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <table class="layui-table" lay-even>
+            <tbody>
+            <tr>
+                <th class="nowrap text-center">{:lang('核心框架')}</th>
+                <td><a target="_blank" href="https://www.thinkphp.cn">ThinkPHP Version {$framework.version|default='None'}</a></td>
+            </tr>
+            <tr>
+                <th class="nowrap text-center">{:lang('平台框架')}</th>
+                <td><a target="_blank" href="https://hlwadmin.top">HlwAdmin Version {$thinkadmin.version|default='6.0.0'}</a></td>
+            </tr>
+            <tr>
+                <th class="nowrap text-center">{:lang('操作系统')}</th>
+                <td>{:php_uname()}</td>
+            </tr>
+            <tr>
+                <th class="nowrap text-center">{:lang('运行环境')}</th>
+                <td>{:ucfirst($request->server('SERVER_SOFTWARE',php_sapi_name()))} & PHP {$Think.const.PHP_VERSION} & {:ucfirst(app()->db->connect()->getConfig('type'))}</td>
+            </tr>
+            <!-- {notempty name='systemid'} -->
+            <tr>
+                <th class="nowrap text-center">{:lang('系统序号')}</th>
+                <td>{$systemid|default=''}</td>
+            </tr>
+            <!-- {/notempty} -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{notempty name='plugins'}
+<div class="layui-card padding-20 shadow">
+    <div class="layui-card-header notselect">
+        <span class="help-label">
+            <b style="color:#333!important;">{:lang('应用插件')}</b>( {:lang('仅开发模式可见')} )
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <table class="layui-table" lay-even>
+            <thead>
+            <tr>
+                <th class="nowrap text-center">{:lang('应用名称')}</th>
+                <th class="nowrap text-center">{:lang('插件名称')}</th>
+                <th class="nowrap text-left">{:lang('插件包名')}</th>
+                <th class="nowrap text-center">{:lang('插件版本')}</th>
+                <th class="nowrap text-center">{:lang('授权协议')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $plugins as $key=>$plugin}
+            <tr>
+                <td class="nowrap text-center">{$key}</td>
+                <td class="nowrap text-center">{$plugin.name|lang}</td>
+                <td class="nowrap text-left">
+                    {if empty($plugin.install.document)}{$plugin.package}
+                    {else}<a target="_blank" href="{$plugin.install.document}">{$plugin.package}</a>{/if}
+                </td>
+                <td class="nowrap text-center">{$plugin.install.version|default='unknow'}</td>
+                <td class="nowrap text-center">
+                    {if empty($plugin.install.license)} -
+                    {elseif is_array($plugin.install.license)}{$plugin.install.license|join='、',###}
+                    {else}{$plugin.install.license|default='-'}{/if}
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+</div>
+{/notempty}
+<!--{/if}-->
+
+<script>
+    layui.form.on('checkbox(NoticeEnableToggle)', function () {
+        var enables = [];
+        $('input[name="notice_enable"]:checked').each(function () {
+            enables.push(this.value);
+        });
+        $.form.load("{:url('notice')}", {'notice[enable]': enables}, 'post');
+    });
+
+    $('body').off('click', '[data-notice-tpl-test]').on('click', '[data-notice-tpl-test]', function () {
+        var tpl = this.dataset.noticeTplTest;
+        $.form.load("{:sysuri('admin/config/test')}", {action: 'template', type: '{:sysconf("notice.type")?: "feishu"}', template: tpl}, 'post');
+    });
+</script>
+{/block}

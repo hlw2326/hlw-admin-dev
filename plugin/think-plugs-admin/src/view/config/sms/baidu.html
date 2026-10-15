@@ -1,0 +1,68 @@
+<form action="{:sysuri()}" method="post" data-auto="true" class="layui-form layui-card">
+    <div class="layui-card-body padding-left-40">
+
+        <input type="hidden" name="sms[type]" value="baidu">
+
+        <div class="color-text layui-code text-center layui-bg-gray" style="border-left-width:1px;margin:0 0 15px 0">
+            <p class="margin-bottom-5 font-w7">使用 <a target="_blank" href="https://console.bce.baidu.com/sms/">百度智能云短信服务</a> 发送验证码与通知</p>
+            <p>需在百度智能云控制台获取 AccessKey、SecretKey 并申请短信签名 ID 与模板 ID</p>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">
+                <b class="color-green">AccessKey</b><br><span class="nowrap color-desc">AK</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="sms[baidu_ak]" value="{:sysconf('sms.baidu_ak')}" required vali-name="AccessKey" placeholder="请输入百度智能云 AccessKey" class="layui-input">
+                <p class="help-block">在 [ 百度智能云控制台 > 安全认证 > Access Key ] 中获取</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">
+                <b class="color-green">SecretKey</b><br><span class="nowrap color-desc">SK</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="sms[baidu_sk]" value="{:sysconf('sms.baidu_sk')}" required vali-name="SecretKey" placeholder="请输入百度智能云 SecretKey" class="layui-input">
+                <p class="help-block">在 [ 百度智能云控制台 > 安全认证 > Access Key ] 中获取安全密钥</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">
+                <b class="color-green">签名 ID</b><br><span class="nowrap color-desc">SignatureId</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="sms[baidu_sign]" value="{:sysconf('sms.baidu_sign')}" required vali-name="签名 ID" placeholder="如：sms-sign-xxxxxxxx" class="layui-input">
+                <p class="help-block">在百度云短信控制台 [ 签名管理 ] 中已审核通过的签名 ID</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">
+                <b class="color-green">模板编号</b><br><span class="nowrap color-desc">TemplateCode</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="sms[baidu_tpl]" value="{:sysconf('sms.baidu_tpl')}" required vali-name="模板编号" placeholder="如：sms-tmpl-xxxxxxxx" class="layui-input">
+                <p class="help-block">在百度云短信控制台 [ 模板管理 ] 中已审核通过的模板 ID</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <b class="color-green">接口地址</b><br><span class="nowrap color-desc">Endpoint</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="sms[baidu_endpoint]" value="{:sysconf('sms.baidu_endpoint')}" placeholder="默认：https://smsv3.bj.baidubce.com" class="layui-input">
+                <p class="help-block">百度智能云短信服务地址，留空时使用北京节点默认地址</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        <button class="layui-btn" type="submit">保存配置</button>
+        <button class="layui-btn layui-btn-danger" type="button" data-confirm="确定要取消修改吗？" data-close>取消修改</button>
+    </div>
+</form>

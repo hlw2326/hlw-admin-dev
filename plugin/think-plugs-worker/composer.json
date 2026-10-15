@@ -1,0 +1,54 @@
+{
+  "type": "think-admin-plugin",
+  "name": "hlw2326/think-plugs-worker",
+  "license": "Apache-2.0",
+  "homepage": "https://thinkadmin.top",
+  "description": "Workerman HTTP and custom process service plugin for HlwAdmin",
+  "authors": [
+    {
+      "name": "hlw2326",
+      "email": "1608626143@qq.com"
+    }
+  ],
+  "require": {
+    "php": ">7.1",
+    "workerman/workerman": "^5.0|^4.1",
+    "hlw2326/think-install": "^1.0|@dev",
+    "hlw2326/think-library": "^6.1|@dev"
+  },
+  "autoload": {
+    "psr-4": {
+      "plugin\\worker\\": "src"
+    }
+  },
+  "extra": {
+    "think": {
+      "services": [
+        "plugin\\worker\\Service"
+      ]
+    },
+    "config": {
+      "type": "service",
+      "name": "基于 Workerman 的通信服务",
+      "document": "https://thinkadmin.top/plugin/think-plugs-worker.html",
+      "license": [
+        "Apache-2.0"
+      ],
+      "description": "基于 Workerman 的运行服务，支持 HTTP 服务及自定义进程配置。"
+    },
+    "plugin": {
+      "init": {
+        "stc/worker.php": "config/worker.php"
+      },
+      "event": {
+        "src/Script.php": "plugin\\worker\\Script"
+      }
+    }
+  },
+  "minimum-stability": "dev",
+  "config": {
+    "allow-plugins": {
+      "hlw2326/think-install": true
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "type": "think-admin-plugin",
+  "name": "hlw2326/think-plugs-admin",
+  "license": "MIT",
+  "homepage": "https://thinkadmin.top",
+  "description": "Admin backend module with system, menu, auth, file and queue management for HlwAdmin",
+  "authors": [
+    {
+      "name": "hlw2326",
+      "email": "1608626143@qq.com"
+    }
+  ],
+  "require": {
+    "php": ">7.1",
+    "ext-json": "*",
+    "topthink/framework": "^6.0|^8.0",
+    "topthink/think-view": "^1.0|^2.0",
+    "zoujingli/ip2region": "^1.0|^2.0|^3.0|@dev",
+    "hlw2326/think-install": "^1.0|@dev",
+    "hlw2326/think-library": "^6.1|@dev",
+    "hlw2326/think-plugs-static": "^1.0|@dev"
+  },
+  "require-dev": {
+    "ext-pdo": "*",
+    "ext-pdo_sqlite": "*",
+    "phpunit/phpunit": "^8.5.52 || ^9.6.33 || ^10.5.62 || ^11.5.50 || ^12.5.8 || ^13.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "app\\admin\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "app\\admin\\tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "think": {
+      "services": [
+        "app\\admin\\Service"
+      ]
+    },
+    "config": {
+      "type": "module",
+      "name": "系统后台管理",
+      "document": "https://thinkadmin.top/plugin/think-plugs-admin.html",
+      "description": "后台基础管理模块，提供系统配置、任务、日志、字典、文件、菜单、权限和用户管理。"
+    },
+    "plugin": {
+      "copy": {
+        "src": "!app/admin",
+        "stc/database": "database/migrations"
+      },
+      "clear": true
+    }
+  },
+  "prefer-stable": true,
+  "minimum-stability": "dev",
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "hlw2326/think-install": true
+    }
+  }
+}

@@ -1,0 +1,58 @@
+<form action="{:sysuri()}" method="post" data-auto="true" class="layui-form layui-card">
+    <div class="layui-card-body padding-left-40">
+
+        <input type="hidden" name="sms[type]" value="twilio">
+
+        <div class="color-text layui-code text-center layui-bg-gray" style="border-left-width:1px;margin:0 0 15px 0">
+            <p class="margin-bottom-5 font-w7">使用 <a target="_blank" href="https://www.twilio.com/">Twilio 国际短信</a> 发送全球短信</p>
+            <p>需在 Twilio Console 获取 Account SID 与 Auth Token，手机号自动适配标准 E.164 格式</p>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">
+                <b class="color-green">账户标识</b><br><span class="nowrap color-desc">AccountSID</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="sms[twilio_sid]" value="{:sysconf('sms.twilio_sid')}" required vali-name="Account SID" placeholder="请输入 Twilio Account SID (如 ACxxxx...)" class="layui-input">
+                <p class="help-block">Twilio 控制台主面板获取的 Account SID</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">
+                <b class="color-green">身份令牌</b><br><span class="nowrap color-desc">AuthToken</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="sms[twilio_token]" value="{:sysconf('sms.twilio_token')}" required vali-name="Auth Token" placeholder="请输入 Twilio Auth Token" class="layui-input">
+                <p class="help-block">Twilio 控制台对应账号的 Auth Token 访问凭据</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">
+                <b class="color-green">发信号码</b><br><span class="nowrap color-desc">FromNumber</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="sms[twilio_from]" value="{:sysconf('sms.twilio_from')}" required vali-name="发信号码" placeholder="如：+12345678900 或已申请的 SenderID" class="layui-input">
+                <p class="help-block">在 Twilio 购买的发信号码（需带国家码如 +1...）或已申请的企业 Sender ID</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <b class="color-green">默认文案</b><br><span class="nowrap color-desc">Template</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="sms[twilio_tpl]" value="{:sysconf('sms.twilio_tpl')}" vali-name="默认短信文案" placeholder="如：Your verification code is: {code}" class="layui-input">
+                <p class="help-block">默认英文或多语言短信内容，支持 <code>&#123;code&#125;</code> 变量占位符替换</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        <button class="layui-btn" type="submit">保存配置</button>
+        <button class="layui-btn layui-btn-danger" type="button" data-confirm="确定要取消修改吗？" data-close>取消修改</button>
+    </div>
+</form>

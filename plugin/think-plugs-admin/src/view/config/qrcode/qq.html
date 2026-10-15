@@ -1,0 +1,38 @@
+<form action="{:sysuri()}" method="post" data-auto="true" class="layui-form layui-card">
+    <div class="layui-card-body padding-left-40">
+
+        <input type="hidden" name="qrcode[type]" value="qq">
+
+        <div class="color-text layui-code text-center layui-bg-gray" style="border-left-width:1px;margin:0 0 15px 0">
+            <p class="margin-bottom-5 font-w7">使用 <a target="_blank" href="https://mp.qq.com/">QQ 小程序开放平台</a></p>
+            <p>基于 QQ 小程序开放平台接口，生成指定页面的 QQ 小程序码</p>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">
+                <b class="color-green">小程序 AppID</b><br><span class="nowrap color-desc">AppID</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="qrcode[qq_appid]" value="{:sysconf('qrcode.qq_appid')}" required vali-name="小程序 AppID" placeholder="如：1100000000" class="layui-input">
+                <p class="help-block">QQ 小程序后台获取的 AppID(应用ID)</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">
+                <b class="color-green">小程序 AppSecret</b><br><span class="nowrap color-desc">AppSecret</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="qrcode[qq_secret]" value="{:sysconf('qrcode.qq_secret')}" required vali-name="小程序 AppSecret" placeholder="AppSecret 密钥" class="layui-input">
+                <p class="help-block">QQ 小程序后台获取的 AppSecret(应用密钥)</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        <button class="layui-btn" type="submit">保存配置</button>
+        <button class="layui-btn layui-btn-danger" type="button" data-confirm="确定要取消修改吗？" data-close>取消修改</button>
+    </div>
+</form>

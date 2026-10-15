@@ -1,0 +1,48 @@
+<form action="{:sysuri()}" method="post" data-auto="true" class="layui-form layui-card">
+    <div class="layui-card-body padding-left-40">
+
+        <input type="hidden" name="sms[type]" value="submail">
+
+        <div class="color-text layui-code text-center layui-bg-gray" style="border-left-width:1px;margin:0 0 15px 0">
+            <p class="margin-bottom-5 font-w7">使用 <a target="_blank" href="https://www.mysubmail.com/">赛邮 SubMail 短信</a> 发送国内与国际短信</p>
+            <p>需在赛邮 SubMail 控制台获取 AppID 与 AppKey，并报备短信模板项目代码</p>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">
+                <b class="color-green">应用标识</b><br><span class="nowrap color-desc">AppID</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="sms[submail_appid]" value="{:sysconf('sms.submail_appid')}" required vali-name="AppID" placeholder="请输入赛邮 SubMail AppID" class="layui-input">
+                <p class="help-block">赛邮控制台 [ 短信服务 > 应用 ] 获取的项目 AppID</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">
+                <b class="color-green">接口密匙</b><br><span class="nowrap color-desc">AppKey</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="sms[submail_appkey]" value="{:sysconf('sms.submail_appkey')}" required vali-name="AppKey" placeholder="请输入赛邮 SubMail AppKey" class="layui-input">
+                <p class="help-block">赛邮控制台对应应用的项目密匙 AppKey / Signature</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">
+                <b class="color-green">项目代码</b><br><span class="nowrap color-desc">Project</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="sms[submail_tpl]" value="{:sysconf('sms.submail_tpl')}" required vali-name="项目代码" placeholder="如：k7x1P2" class="layui-input">
+                <p class="help-block">赛邮控制台创建并通过审核的短信项目代码 (Project)</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        <button class="layui-btn" type="submit">保存配置</button>
+        <button class="layui-btn layui-btn-danger" type="button" data-confirm="确定要取消修改吗？" data-close>取消修改</button>
+    </div>
+</form>

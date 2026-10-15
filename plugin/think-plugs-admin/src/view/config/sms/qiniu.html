@@ -1,0 +1,58 @@
+<form action="{:sysuri()}" method="post" data-auto="true" class="layui-form layui-card">
+    <div class="layui-card-body padding-left-40">
+
+        <input type="hidden" name="sms[type]" value="qiniu">
+
+        <div class="color-text layui-code text-center layui-bg-gray" style="border-left-width:1px;margin:0 0 15px 0">
+            <p class="margin-bottom-5 font-w7">使用 <a target="_blank" href="https://portal.qiniu.com/sms">七牛云短信</a> 发送验证码与通知</p>
+            <p>需在七牛云开发者平台获取 AccessKey、SecretKey 并申请短信模板与签名</p>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">
+                <b class="color-green">AccessKey</b><br><span class="nowrap color-desc">AK</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="sms[qiniu_ak]" value="{:sysconf('sms.qiniu_ak')}" required vali-name="AccessKey" placeholder="请输入七牛云 AccessKey" class="layui-input">
+                <p class="help-block">在 [ 七牛云控制台 > 个人中心 > 密钥管理 ] 中获取</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">
+                <b class="color-green">SecretKey</b><br><span class="nowrap color-desc">SK</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="sms[qiniu_sk]" value="{:sysconf('sms.qiniu_sk')}" required vali-name="SecretKey" placeholder="请输入七牛云 SecretKey" class="layui-input">
+                <p class="help-block">在 [ 七牛云控制台 > 个人中心 > 密钥管理 ] 中获取安全密钥</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">
+                <b class="color-green">模板编号</b><br><span class="nowrap color-desc">TemplateId</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="sms[qiniu_tpl]" value="{:sysconf('sms.qiniu_tpl')}" required vali-name="模板编号" placeholder="如：1234567890123456789" class="layui-input">
+                <p class="help-block">在七牛云短信控制台 [ 模版管理 ] 中审核通过的模版 ID</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <b class="color-green">签名编号</b><br><span class="nowrap color-desc">SignatureId</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="sms[qiniu_sign]" value="{:sysconf('sms.qiniu_sign')}" placeholder="请输入已审核通过的签名 ID（可选）" class="layui-input">
+                <p class="help-block">若创建模板时未绑定签名，可在下发短信时指定签名 ID</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        <button class="layui-btn" type="submit">保存配置</button>
+        <button class="layui-btn layui-btn-danger" type="button" data-confirm="确定要取消修改吗？" data-close>取消修改</button>
+    </div>
+</form>

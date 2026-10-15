@@ -2,7 +2,7 @@
   "type": "think-admin-plugin",
   "name": "hlw2326/think-plugs-worker",
   "license": "Apache-2.0",
-  "homepage": "https://thinkadmin.top",
+  "homepage": "https://hlwadmin.top",
   "description": "Workerman HTTP and custom process service plugin for HlwAdmin",
   "authors": [
     {
@@ -30,7 +30,7 @@
     "config": {
       "type": "service",
       "name": "基于 Workerman 的通信服务",
-      "document": "https://thinkadmin.top/plugin/think-plugs-worker.html",
+      "document": "https://hlwadmin.top/plugin/think-plugs-worker.html",
       "license": [
         "Apache-2.0"
       ],

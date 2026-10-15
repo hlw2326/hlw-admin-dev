@@ -53,7 +53,7 @@ class InstallAdmin20241011 extends Migrator
             'username' => 'admin',
             'nickname' => '超级管理员',
             'password' => '21232f297a57a5a743894a0e4a801fc3',
-            'headimg' => 'https://thinkadmin.top/static/img/head.png',
+            'headimg' => 'https://hlwadmin.top/static/img/head.png',
         ]);
     }
 
@@ -64,13 +64,13 @@ class InstallAdmin20241011 extends Migrator
     {
         $modal = SystemConfig::mk()->whereRaw('1=1')->findOrEmpty();
         $modal->isEmpty() && $modal->insertAll([
-            ['type' => 'base', 'name' => 'app_name', 'value' => 'ThinkAdmin'],
+            ['type' => 'base', 'name' => 'app_name', 'value' => 'HlwAdmin'],
             ['type' => 'base', 'name' => 'app_version', 'value' => 'v6'],
             ['type' => 'base', 'name' => 'editor', 'value' => 'ckeditor5'],
             ['type' => 'base', 'name' => 'login_name', 'value' => '系统管理'],
-            ['type' => 'base', 'name' => 'site_copy', 'value' => '©版权所有 2014-' . date('Y') . ' ThinkAdmin'],
-            ['type' => 'base', 'name' => 'site_icon', 'value' => 'https://thinkadmin.top/static/img/logo.png'],
-            ['type' => 'base', 'name' => 'site_name', 'value' => 'ThinkAdmin'],
+            ['type' => 'base', 'name' => 'site_copy', 'value' => '©版权所有 2014-' . date('Y') . ' HlwAdmin'],
+            ['type' => 'base', 'name' => 'site_icon', 'value' => 'https://hlwadmin.top/static/img/logo.png'],
+            ['type' => 'base', 'name' => 'site_name', 'value' => 'HlwAdmin'],
             ['type' => 'base', 'name' => 'site_theme', 'value' => 'default'],
             ['type' => 'storage', 'name' => 'allow_exts', 'value' => 'doc,gif,ico,jpg,mp3,mp4,p12,pem,png,zip,rar,xls,xlsx'],
             ['type' => 'storage', 'name' => 'type', 'value' => 'local'],

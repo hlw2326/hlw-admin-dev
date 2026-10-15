@@ -42,7 +42,7 @@ class Worker extends Command
             ->addOption('port', 'p', Option::VALUE_OPTIONAL, 'the port of workerman server.')
             ->addOption('custom', 'c', Option::VALUE_OPTIONAL, 'the custom workerman server.', 'default')
             ->addOption('daemon', 'd', Option::VALUE_NONE, 'Run the workerman server in daemon mode.')
-            ->setDescription('Workerman Http Server for ThinkAdmin');
+            ->setDescription('Workerman Http Server for HlwAdmin');
     }
 
     public function execute(Input $input, Output $output)

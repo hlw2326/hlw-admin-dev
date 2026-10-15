@@ -2,7 +2,7 @@
   "type": "think-admin-plugin",
   "name": "hlw2326/think-plugs-admin",
   "license": "MIT",
-  "homepage": "https://thinkadmin.top",
+  "homepage": "https://hlwadmin.top",
   "description": "Admin backend module with system, menu, auth, file and queue management for HlwAdmin",
   "authors": [
     {
@@ -44,7 +44,7 @@
     "config": {
       "type": "module",
       "name": "系统后台管理",
-      "document": "https://thinkadmin.top/plugin/think-plugs-admin.html",
+      "document": "https://hlwadmin.top/plugin/think-plugs-admin.html",
       "description": "后台基础管理模块，提供系统配置、任务、日志、字典、文件、菜单、权限和用户管理。"
     },
     "plugin": {

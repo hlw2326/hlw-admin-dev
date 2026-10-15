@@ -40,23 +40,23 @@ class Plugs extends Controller
                 }
             }
         }
-        // 读取 ThinkAdmin 字体图标
-        if (empty($this->thinkIcons = $this->app->cache->get('ThinkAdminSelfIcons', []))) {
+        // 读取 HlwAdmin 字体图标
+        if (empty($this->thinkIcons = $this->app->cache->get('HlwAdminSelfIcons', []))) {
             $style = file_get_contents(syspath('public/static/theme/css/iconfont.css'));
             if (preg_match_all('#\.(iconfont-[\w-]+):#', $style, $matches)) {
                 if (count($this->thinkIcons = $matches[1]) > 0) {
-                    $this->app->cache->set('ThinkAdminSelfIcons', $this->thinkIcons, 60);
+                    $this->app->cache->set('HlwAdminSelfIcons', $this->thinkIcons, 60);
                 }
             }
         }
         // 读取 extra 自定义字体图标
-        if (empty($this->extraIcons = $this->app->cache->get('ThinkAdminExtraIcons', []))) {
+        if (empty($this->extraIcons = $this->app->cache->get('HlwAdminExtraIcons', []))) {
             $extraIconPath = syspath('public/static/extra/icon/iconfont.css');
             if (file_exists($extraIconPath)) {
                 $style = file_get_contents($extraIconPath);
                 if (preg_match_all('#\.(iconfont-[\w-]+):#', $style, $matches)) {
                     if (count($this->extraIcons = $matches[1]) > 0) {
-                        $this->app->cache->set('ThinkAdminExtraIcons', $this->extraIcons, 60);
+                        $this->app->cache->set('HlwAdminExtraIcons', $this->extraIcons, 60);
                     }
                 }
             }

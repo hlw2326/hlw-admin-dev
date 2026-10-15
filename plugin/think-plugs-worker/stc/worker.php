@@ -24,7 +24,7 @@ return [
     'callable' => null,
     // 服务进程参数配置
     'worker' => [
-        'name' => 'ThinkAdmin',
+        'name' => 'HlwAdmin',
         'count' => 4,
     ],
 ];

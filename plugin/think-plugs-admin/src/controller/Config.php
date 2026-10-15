@@ -85,7 +85,7 @@ class Config extends Controller
         $this->issuper = AdminService::isSuper();
         $this->systemid = ModuleService::getRunVar('uni');
         $this->framework = ModuleService::getLibrarys('topthink/framework');
-        $this->thinkadmin = ModuleService::getLibrarys('hlw2326/think-library');
+        $this->hlwadmin = ModuleService::getLibrarys('hlw2326/think-library');
         if (AdminService::isSuper() && $this->app->session->get('user.password') === md5('admin')) {
             $url = url('admin/index/pass', ['id' => AdminService::getUserId()]);
             $this->showErrorMessage = lang("超级管理员账号的密码未修改，建议立即<a data-modal='%s'>修改密码</a>！", [$url]);

@@ -2,7 +2,7 @@
   "type": "composer-plugin",
   "name": "hlw2326/think-install",
   "license": "Apache-2.0",
-  "homepage": "https://thinkadmin.top",
+  "homepage": "https://hlwadmin.top",
   "description": "Plugin Installer for HlwAdmin",
   "authors": [
     {

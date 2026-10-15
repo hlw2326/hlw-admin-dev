@@ -19,7 +19,7 @@ use think\migration\Migrator;
 /**
  * 系统模块数据.
  */
-class InstallAdmin20241010 extends Migrator
+class InstallAdminSchema extends Migrator
 {
     /**
      * 获取脚本名称.

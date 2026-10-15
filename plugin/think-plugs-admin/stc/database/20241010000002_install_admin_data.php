@@ -22,7 +22,7 @@ use think\migration\Migrator;
 /**
  * 系统模块数据.
  */
-class InstallAdmin20241011 extends Migrator
+class InstallAdminData extends Migrator
 {
     /**
      * 获取脚本名称.

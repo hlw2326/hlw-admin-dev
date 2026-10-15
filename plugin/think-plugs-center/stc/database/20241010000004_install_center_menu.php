@@ -14,7 +14,7 @@ declare(strict_types=1);
 use think\admin\database\migration\PhinxExtend;
 use think\migration\Migrator;
 
-class InstallCenter20241010 extends Migrator
+class InstallCenterMenu extends Migrator
 {
     /**
      * 获取脚本名称.

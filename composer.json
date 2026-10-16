@@ -47,6 +47,40 @@
             "php -m"
         ]
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "plugin/think-install"
+        },
+        {
+            "type": "path",
+            "url": "plugin/think-plugs-helper"
+        },
+        {
+            "type": "path",
+            "url": "plugin/think-plugs-worker"
+        },
+        {
+            "type": "path",
+            "url": "plugin/think-plugs-admin"
+        },
+        {
+            "type": "path",
+            "url": "plugin/think-plugs-center"
+        },
+        {
+            "type": "path",
+            "url": "plugin/think-plugs-static"
+        },
+        {
+            "type": "path",
+            "url": "plugin/think-library"
+        },
+        {
+            "type": "path",
+            "url": "plugin/think-library-site"
+        }
+    ],
     "minimum-stability": "dev",
     "config": {
         "sort-packages": true,

@@ -27,6 +27,7 @@
 /database/sqlite.db
 
 ### 屏蔽插件文件
+/plugin/
 /app/admin
 /app/wechat
 

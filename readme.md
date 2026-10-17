@@ -60,6 +60,14 @@ php think run --host 127.0.0.1 --port 8088
 start http://127.0.0.1:8088
 ```
 
+### 开发辅助命令
+
+安装 `think-plugs-helper` 后，可根据数据表字段及备注生成模型属性注释，提升 IDE 提示效果：
+
+```shell
+php think xadmin:helper:model
+```
+
 ### 版权说明
 
 项目的 `./plugin/` 为插件目录，每个插件都有独立声明授权方式，使用前请认真阅读。

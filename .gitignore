@@ -1,4 +1,5 @@
 .env
+/.env.crypt
 .git
 .svn
 .idea
